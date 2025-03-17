@@ -2,8 +2,8 @@
   import { onMount } from "svelte";
   import * as d3 from "d3";
 
-  let selectedClass = "1st";
-  let classData = {
+  let selectedClass = "1st"; // Cuando se inicia la aplicacion muestro los datos de la 1 clase
+  let classData = { // Aqui guardamos los datos de la tabla
     "1st": { men: { survived: 0, deceased: 0 }, women: { survived: 0, deceased: 0 }, children: { survived: 0, deceased: 0 } },
     "2nd": { men: { survived: 0, deceased: 0 }, women: { survived: 0, deceased: 0 }, children: { survived: 0, deceased: 0 } },
     "3rd": { men: { survived: 0, deceased: 0 }, women: { survived: 0, deceased: 0 }, children: { survived: 0, deceased: 0 } },
@@ -13,7 +13,7 @@
   async function loadCSVData() {
     const data = await d3.csv("/Titanic-Dataset.csv");
 
-    classData = {
+    classData = { 
       "1st": { men: { survived: 0, deceased: 0 }, women: { survived: 0, deceased: 0 }, children: { survived: 0, deceased: 0 } },
       "2nd": { men: { survived: 0, deceased: 0 }, women: { survived: 0, deceased: 0 }, children: { survived: 0, deceased: 0 } },
       "3rd": { men: { survived: 0, deceased: 0 }, women: { survived: 0, deceased: 0 }, children: { survived: 0, deceased: 0 } },
@@ -30,13 +30,13 @@
       let category;
       if (age !== null && age < 16) {
         category = "children";
-      } else if (sex === "male") {
+      } else if (sex === "male") {  // determino si es hombre o mujer
         category = "men";
       } else {
         category = "women";
       }
 
-      // Actualizar los contadores
+      // Aqui actualizamos los contadores de supervivientes y fallecidos
       if (survived === 1) {
         classData[classKey][category].survived++;
       } else {
@@ -47,8 +47,7 @@
     console.log("Datos de la tabla procesados:", classData);
   }
 
-  // Función para actualizar la tabla al hacer clic en los botones
-  function updateTable(classType) {
+  function updateTable(classType) {  // con esta función actualizamos la tabla al hacer clic en los botones
     selectedClass = classType;
   }
 

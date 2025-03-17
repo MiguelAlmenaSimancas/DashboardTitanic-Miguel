@@ -17,13 +17,13 @@
     // Reiniciar los contadores
     deathsByAge = { male: [0, 0, 0, 0, 0, 0], female: [0, 0, 0, 0, 0, 0] };
 
-    data.forEach(passenger => {
-      const survived = +passenger.Survived;
-      const sex = passenger.Sex?.trim().toLowerCase();
+    data.forEach(passenger => {  
+      const survived = +passenger.Survived;  
+      const sex = passenger.Sex?.trim().toLowerCase(); 
       const age = passenger.Age ? parseFloat(passenger.Age) : null;
 
-      if (survived === 0 && age !== null && (sex === "male" || sex === "female")) {
-        const index = ageRanges.findIndex(limit => age <= limit);
+      if (survived === 0 && age !== null && (sex === "male" || sex === "female")) { 
+        const index = ageRanges.findIndex(limit => age <= limit);  
         const rangeIndex = index === -1 ? 5 : index;
         deathsByAge[sex][rangeIndex]++;
       }
@@ -38,7 +38,7 @@
 
     d3.select(svgContainer).selectAll("*").remove();
 
-    const width = 500, height = 400;
+    const width = 500, height = 400;   // dimension grafica
     const svg = d3.select(svgContainer)
       .attr("width", width)
       .attr("height", height)
@@ -46,12 +46,12 @@
       .attr("transform", "translate(50,20)");
 
     const xScale = d3.scaleBand()
-      .domain(["0-15", "16-30", "31-45", "46-60", "61-75", "76+"])
+      .domain(["0-15", "16-30", "31-45", "46-60", "61-75", "76+"]) // añado rango edades
       .range([0, width - 100])
       .padding(0.3);
 
-    const yScale = d3.scaleLinear()
-      .domain([0, d3.max(data) || 1])
+    const yScale = d3.scaleLinear()  
+      .domain([0, d3.max(data) || 1]) 
       .range([height - 50, 0]);
 
     svg.append("g")
@@ -60,7 +60,7 @@
 
     svg.append("g").call(d3.axisLeft(yScale));
 
-    if (selectedGender !== null) {
+    if (selectedGender !== null) {  // animacion para la grafica
       svg.selectAll("rect")
         .data(data)
         .enter()
@@ -77,7 +77,7 @@
     }
   }
 
-  // Función para actualizar la gráfica según el género seleccionado
+  // funcion para actualizar la grafica segun el genero que seleccione el usuario
   function updateChart(gender) {
     selectedGender = gender;
     drawChart(deathsByAge[gender], gender === "male" ? "#0077b6" : "#ff6f61");
@@ -85,7 +85,7 @@
 
   onMount(async () => {
     await loadCSVData(); 
-    drawChart([0, 0, 0, 0, 0, 0], "#cccccc");
+    drawChart([0, 0, 0, 0, 0, 0], "#cccccc"); // dibiujo gráfica vacía
   });
 </script>
 

@@ -1,4 +1,5 @@
 <script>
+  
   export let survivorFilter;
   
   let totalPassengers = 0;
@@ -11,14 +12,14 @@
     const response = await fetch("/Titanic-Dataset.csv");
     const text = await response.text();
 
-    const data = text.split("\n").slice(1).map(row => {
-      const columns = row.split(",");
-      return { Survived: parseInt(columns[1]) };
+    const data = text.split("\n").slice(1).map(row => {  
+      const columns = row.split(",");  
+      return { Survived: parseInt(columns[1]) }; 
     });
 
-    totalPassengers = data.length;
-    survivors = data.filter(p => p.Survived === 1).length;
-    deceased = data.filter(p => p.Survived === 0).length;
+    totalPassengers = data.length; 
+    survivors = data.filter(p => p.Survived === 1).length; 
+    deceased = data.filter(p => p.Survived === 0).length; 
   
     survivorPercentage = ((survivors / totalPassengers) * 100).toFixed(1);
     deceasedPercentage = ((deceased / totalPassengers) * 100).toFixed(1);
@@ -44,7 +45,7 @@
           : `${deceasedPercentage}%`}
     </p>
   </div>
-  <p class="label">
+  <p class="label">  
     {survivorFilter === null
       ? `Total pasajeros: ${totalPassengers}`
       : survivorFilter
